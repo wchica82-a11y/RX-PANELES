@@ -312,7 +312,6 @@ function renderOverview(root, rd, region) {
   tableSec.className = "section";
   tableSec.innerHTML = `
     <h2>Detalle por clase terapéutica</h2>
-    <div class="hint">Click en una fila para ver los packs de esa clase.</div>
     <table>
       <thead><tr>
         <th>Clase</th>
@@ -501,14 +500,6 @@ function renderMonthlyEvolution(root, rd, region, cls) {
   const clsTxt = cls === "ALL" ? "todas las clases Biogenet" : clsLabelFull(cls);
   let html = `
     <h2>Evolución mensual por pack — Biogenet (${clsTxt}, ${regionTxt})</h2>
-    <div class="hint">Cada celda mensual está coloreada según el peso del mes dentro de la fila (rojo = mes débil, verde = mes fuerte).</div>
-    <div class="legend-strip">Escala por fila:
-      <span class="ramp">
-        <i style="background:hsl(8,65%,96%)"></i><i style="background:hsl(40,65%,93%)"></i>
-        <i style="background:hsl(70,65%,90%)"></i><i style="background:hsl(100,65%,87%)"></i>
-        <i style="background:hsl(140,65%,84%)"></i>
-      </span><span>débil → fuerte</span>
-    </div>
     <div style="overflow-x:auto">
     <table class="heatmap">
       <thead><tr>
@@ -589,7 +580,7 @@ function renderRegionBreakdown(root, region, cls) {
   const clsTxt = cls === "ALL" ? "todas las clases Biogenet" : clsLabelFull(cls);
   let html = `
     <h2>Venta por pack y región — Biogenet (${clsTxt})</h2>
-    <div class="hint">${DATA.meta.curr_label} con crecimiento vs ${DATA.meta.prev_label} por región. Verde = crece, rojo = cae.</div>
+    <div class="hint">${DATA.meta.curr_label} con crecimiento vs ${DATA.meta.prev_label} por región.</div>
     ${region !== "TOTAL" ? `<div class="note">Tienes un filtro geográfico activo (<strong>${geoTxt(region)}</strong>), pero esta tabla siempre muestra las 3 regiones para comparar.</div>` : ''}
     <div style="overflow-x:auto">
     <table class="region-table">
@@ -865,8 +856,6 @@ function renderProductividad() {
   const numCols = compLabel ? 12 : 9;
   let html = `
     <h2>Productividad por visitador — ${classLabel}</h2>
-    <div class="note">Como varios visitadores comparten bricks (146 de los 153 tienen más de un visitador), las ventas se atribuyen completas a cada visitador que cubre el brick. La fila TOTAL aparece <strong>inflada por esa atribución compartida</strong>. Los KPIs de arriba usan el total real único (sin duplicación); los valores por brick individual sí son los reales.</div>
-    <div class="hint">Jerarquía: <strong>Visitador → Clases terapéuticas → Bricks</strong>. Click en un visitador para ver sus clases; click en una clase para ver los bricks donde tiene actividad de esa clase. <strong>Mi producto</strong>: ${myLabel}.${compLabel ? ` <strong>Comparar con</strong>: ${compLabel} (${compLabName}).` : ''}</div>
     <div style="overflow-x:auto">
     <table class="prod-table">
       <thead>
@@ -923,7 +912,7 @@ function renderProductividad() {
   const tCg = compLabel ? growth(totals.cP, totals.cC) : null;
   const tKg = growth(totals.mP, totals.mC);
   html += `<tr style="background:#f9fafb; font-weight:700; border-top:2px solid #d1d5db">
-    <td>TOTAL (atribuido — los bricks compartidos cuentan en varios visitadores)</td>
+    <td>TOTAL</td>
     <td class="num">${P.bricks.length}</td>
     <td class="num">${fmtUSD(totals.myP)}</td>
     <td class="num">${fmtUSD(totals.myC)}</td>
@@ -1092,7 +1081,7 @@ function renderResumen(){
       <div class="kpi-sub">vs ${(T.share_prev*100).toFixed(2)}% trim. anterior</div></div>
   </div>`;
   html+=`<div class="section"><h2>Comparativo por región — ${DATA.meta.curr_label} vs ${DATA.meta.prev_label}</h2>
-    <div class="hint">Mercado relevante = suma de las 6 clases terapéuticas donde participa Biogenet. Verde = crece, rojo = cae.</div>
+    <div class="hint">Mercado relevante = suma de las 6 clases terapéuticas donde participa Biogenet.</div>
     <div style="overflow-x:auto"><table class="region-table"><thead><tr>
       <th>Región</th><th class="num">Mercado ${DATA.meta.curr_label}</th><th class="num">Crec. mercado</th>
       <th class="num">Biogenet ${DATA.meta.curr_label}</th><th class="num">Crec. Biogenet</th>
